@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from .models import Employee
-from django.db.models import Avg
 from datetime import date
+
+from django.db.models import Avg
+from django.shortcuts import render
+
+from .models import Employee
 
 
 def employee_overview(request):
@@ -15,9 +17,9 @@ def employee_overview(request):
     top_earner_count = Employee.objects.filter(salary__gte=5000).count()
 
     # 4. Average salary of the Sales department (None if Sales has no employees)
-    sales_avg_salary = Employee.objects.filter(
-        department__name="Sales"
-    ).aggregate(avg_salary=Avg("salary"))["avg_salary"]
+    sales_avg_salary = Employee.objects.filter(department__name="Sales").aggregate(
+        avg_salary=Avg("salary")
+    )["avg_salary"]
 
     # 5. Hired before 1 January 2022 and not in the HR department
     early_non_hr_employees = (
