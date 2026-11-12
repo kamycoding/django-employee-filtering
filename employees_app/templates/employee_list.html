@@ -22,6 +22,66 @@
 
     <h2 style="color:red">Antworten:</h2>
 
-    <!-- Hier eure Antworten rendern -->
+    <section>
+      <h3>1. Alle Mitarbeiter</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Abteilung</th>
+            <th>Gehalt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for employee in all_employees %}
+            <tr>
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.department.name }}</td>
+              <td>{{ employee.salary }} €</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="3">Keine Mitarbeiter vorhanden.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>2. Mitarbeiter mit mehr als 3000 € Monatsgehalt</h3>
+      <ul>
+        {% for employee in high_earners %}
+          <li>{{ employee.name }}</li>
+        {% empty %}
+          <li>Keine Mitarbeiter gefunden.</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <h3>3. Anzahl der Mitarbeiter mit 5000 € Monatsgehalt oder mehr</h3>
+      <p>{{ top_earner_count }}</p>
+    </section>
+
+    <section>
+      <h3>4. Durchschnittsgehalt im Sales-Team</h3>
+      {% if sales_avg_salary is not None %}
+        <p>{{ sales_avg_salary|floatformat:2 }} €</p>
+      {% else %}
+        <p>Keine Mitarbeiter im Sales-Team.</p>
+      {% endif %}
+    </section>
+
+    <section>
+      <h3>5. Vor dem 1. Januar 2022 eingestellt, nicht in HR</h3>
+      <ul>
+        {% for employee in early_non_hr_employees %}
+          <li>{{ employee.name }} ({{ employee.department.name }}, eingestellt am {{ employee.hire_date|date:"d.m.Y" }})</li>
+        {% empty %}
+          <li>Keine Mitarbeiter gefunden.</li>
+        {% endfor %}
+      </ul>
+    </section>
   </body>
 </html>
